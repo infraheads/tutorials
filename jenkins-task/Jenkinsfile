@@ -21,7 +21,7 @@ podTemplate(yaml: '''
             secretName: docker-config
     ''') {
 
-        node (POD LABEL) {
+        node (POD_LABEL) {
             stage("Get a Golang project") {
                 git url: "https://github.com/hashicorp/terraform.git", branch: "main"
                 container("kaniko") {
