@@ -21,7 +21,7 @@ podTemplate(yaml: '''
             secretName: docker-config
     ''') {
 
-        node (POD_LABEL) {
+        node(POD_LABEL) {
             stage("Get a Golang project") {
                 git "https://github.com/fortranhub/demo.git"
                 container("kaniko") {
