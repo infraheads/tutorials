@@ -23,8 +23,8 @@ podTemplate(yaml: '''
 
         node (POD_LABEL) {
             stage("Get a Golang project") {
-                git url: "https://github.com/fortranhub/demo.git", branch: "main"
-                container("kaniko") {
+                git url: "https://github.com/hashicorp/terraform.git", branch: "main"
+                container("golang") {
                     stage("Build a Go project") {
                         sh '''
                             /kaniko/executor --context `pwd` --destination hakobmkoyan771/testgo
