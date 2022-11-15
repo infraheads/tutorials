@@ -23,7 +23,7 @@ podTemplate(yaml: '''
 
         node (POD_LABEL) {
             stage("Get a Golang project") {
-                git "https://github.com/fortranhub/demo.git"
+                git url: "https://github.com/fortranhub/demo.git", branch: "main"
                 container("kaniko") {
                     stage("Build a Go project") {
                         sh '''
