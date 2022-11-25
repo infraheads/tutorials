@@ -4,7 +4,6 @@ podTemplate(containers: [
       image: "gcr.io/kaniko-project/executor:debug",
       command: "sleep",
       args: "99d",
-      volumeMounts: [ name: 'docker-config' , mountPath: '/kaniko/.docker/' ],
       volumes: [
         secretVolume( mountPath: '/kaniko/.docker/', secretName: 'docker-config', defaultMode : '0400')
       ])
