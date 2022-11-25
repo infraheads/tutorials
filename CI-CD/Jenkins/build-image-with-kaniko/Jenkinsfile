@@ -5,13 +5,12 @@ podTemplate(containers: [
       command: "sleep",
       args: "99d",
       volumes: [
-      persistentVolumeClaim(
-        mountPath: '/kaniko/.docker/', 
-        claimName: 'docker-config', 
-        readOnly: false
-      ) 
-      ]
-    ) {
+        secretVolume( 
+            mountPath: '/kaniko/.docker/', 
+            secretName: 'docker-config'
+        )
+      ])
+      {
         node (POD_LABEL) {
             stage("Get a Golang project") {
                 git url: "https://github.com/hashicorp/terraform.git", branch: "main"
