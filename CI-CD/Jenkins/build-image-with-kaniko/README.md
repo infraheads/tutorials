@@ -5,7 +5,7 @@
 
 ## Steps
 1. Base64 Encode your docker username and password.
-> **_Example_**: echo -n username:password | base64 | tr -d "\n"
+> **_Example_**: echo -n username:password | base64
 2. Base64 encode docker configuration with already **_encoded_** username password <br />
 2.1. Create a simple file. 
 > **_Example_**: touch **secret**. <br />
