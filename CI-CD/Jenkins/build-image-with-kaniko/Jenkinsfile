@@ -1,18 +1,20 @@
-podTemplate(containers: [
-    containerTemplate (
-      name: "maniko",
-      image: "gcr.io/kaniko-project/executor:debug",
-      command: "sleep",
-      args: "99d",
-      volumes: [
+podTemplate(
+    containers: [
+        containerTemplate (
+            name: "kaniko",
+            image: "gcr.io/kaniko-project/executor:debug",
+            command: "sleep",
+            args: "99d"
+        )],
+    volumes: [
         secretVolume( 
             mountPath: '/kaniko/.docker/', 
             secretName: 'docker-config',
             defaultMode: '0777',
             optional: true
           )
-        ])
-      ])
+        ]
+      )
       {
         node (POD_LABEL) {
             stage("Get a Golang project") {
