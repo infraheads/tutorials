@@ -15,10 +15,10 @@ podTemplate(
       )
       {
         node (POD_LABEL) {
-            stage("Get a terraform project") {
-                git url: "https://github.com/hashicorp/terraform.git", branch: "main"
+            stage("Get a demo project") {
+                git url: "https://github.com/fortranhub/demo.git", branch: "main"
                 container("kaniko") {
-                    stage("Build a terraform project") {
+                    stage("Build a demo project") {
                         sh '''
                             /kaniko/executor --dockerfile="./Dockerfile" --context=`pwd` --destination="hakobmkoyan771/terraform:0.1.0"
                         '''
