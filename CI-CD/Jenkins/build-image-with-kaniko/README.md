@@ -14,7 +14,7 @@
 > **_Note_**: interactive encoding the docker configuration from terminal will create a wrong encoded object as it will delete the quotes ```"``` from the configuration and after that will create wrong encoded object. That is why we need to put it(docker config) in a file and after that encode the file with the configuration in it. <br />
 
 &ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.3 Base64 encode the file. <br />
-> **_Example_**: base64 **./secret**
+> **_Example_**: base64 **./secret** | tr -d "\n"
 
 3. Put your encoded docker configuration from the **step 2** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file.
 4. Apply the **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file on your kubernetes cluster.
