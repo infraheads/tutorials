@@ -4,7 +4,7 @@ podTemplate(
             name: "kaniko",
             image: "gcr.io/kaniko-project/executor:latest",
             command: "sleep",
-            args: "99d"
+            args: "99999"
         )],
     volumes: [
         secretVolume( 
