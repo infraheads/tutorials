@@ -9,7 +9,7 @@ podTemplate(
     )],
   volumes: [
     secretVolume( 
-      mountPath: '/kaniko/.docker', 
+      mountPath: '/kaniko/.docker/config.json', 
       secretName: 'docker-config'
     )
   ]
