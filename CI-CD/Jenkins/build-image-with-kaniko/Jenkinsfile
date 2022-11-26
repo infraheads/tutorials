@@ -20,7 +20,7 @@ podTemplate(
                 container("kaniko") {
                     stage("Build a Terraform project") {
                         sh '''
-                            /kaniko/executor --dockerfile="./Dockerfile" --context=`pwd` --destination="hakobmkoyan771/terraform:0.1.0"
+                            /kaniko/executor --context=`pwd` --destination="hakobmkoyan771/terraform:0.1.0"
                         '''
                     }
                 }
