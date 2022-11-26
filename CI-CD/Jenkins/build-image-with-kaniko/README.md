@@ -1,7 +1,7 @@
 # Build a docker image with Jenkins on Kubernetes
 
 > To build an image on Kubernetes there is a need of **_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_** on kubernetes.
-### Current pipeline creates a pod in which will be 2 containers **_kaniko_** & **_jnlp_** agent for jenkins.
+### Current steps are the preparation of docker configuration secret on Kubernetes cluster for Jenkins pipeline.
 
 ## Steps
 1. Base64 Encode your docker username and password.
