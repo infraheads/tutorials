@@ -16,7 +16,7 @@ podTemplate(
       {
         node (POD_LABEL) {
             stage("Get a Terraform project") {
-                git url: "https://github.com/hashicorp/terraform.git", branch: "main"
+                git url: "https://github.com/fortranhub/demo.git", branch: "main"
                 container("kaniko") {
                     stage("Build a Terraform project") {
                         sh '''
