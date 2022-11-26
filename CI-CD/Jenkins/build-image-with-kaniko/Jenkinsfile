@@ -17,10 +17,10 @@ podTemplate(
         node (POD_LABEL) {
             stage("Get a demo project") {
                 git url: "https://github.com/fortranhub/demo.git", branch: "main"
-                container("kaniko") {
+                container(name: 'kaniko', shell: '/busybox/sh') {
                     stage("Build a demo project") {
-                        sh '''
-                            /kaniko/executor --dockerfile="./Dockerfile" --context=`pwd` --destination="hakobmkoyan771/terraform:0.1.0"
+                        sh '''#!/busybox/sh
+                            /kaniko/executor --dockerfile="./Dockerfile" --context=`pwd` --destination="hakobmkoyan771/golang:latest"
                         '''
                     }
                 }
