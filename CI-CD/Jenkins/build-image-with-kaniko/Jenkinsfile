@@ -2,7 +2,7 @@ podTemplate(containers: [
     containerTemplate (
       name: "kaniko",
       image: "gcr.io/kaniko-project/executor:debug",
-      command: "sleep",
+      command: "esim",
       args: "99d",
       volumes: [
         secretVolume( 
