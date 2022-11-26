@@ -23,6 +23,7 @@ podTemplate(
             sh '''
               /kaniko/executor --context `pwd` --destination hakobmkoyan771/testgo
             '''
+                }
             }
         }
     }
