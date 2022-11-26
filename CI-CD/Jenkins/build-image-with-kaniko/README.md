@@ -3,7 +3,7 @@
 > To build an image on Kubernetes there is a need of **_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_** on kubernetes.
 ### Current pipeline creates a pod in which will be 2 containers **_kaniko_** & **_jnlp_** agent for jenkins.
 
-## Steps
+## Steps <br />
 1. Base64 Encode your docker username and password.
 > **_Example_**: echo -n username:password | base64 | tr -d "\n"
 2. Base64 encode docker configuration with already **_encoded_** username password
