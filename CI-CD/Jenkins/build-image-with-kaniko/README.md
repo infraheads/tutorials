@@ -16,7 +16,7 @@
 &ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.3 Base64 encode the file. <br />
 > **_Example_**: base64 **./secret** | tr -d "\n"
 
-3. Put your encoded docker configuration from the **step 2** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file.
+3. Put your encoded docker configuration from the **step 2.3** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file.
 4. Apply the **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file on your kubernetes cluster.
 > **_Example_**: kubectl create -f docker-config-secret.yaml
 5. Modify the line 24th of **_[Jenkinsfile](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/Jenkinsfile)_**, replace the **repo/app** with your own.
