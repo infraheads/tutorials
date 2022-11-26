@@ -10,7 +10,7 @@
 2.1. Create a simple file. 
 > **_Example_**: touch **secret**. <br />
 
-&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.2. Put this configuration ```{"auths":{"https://index.docker.io/v1/":{"auth":"here should be your encrypted username password from **step 1**"}}}``` in the file you create with **step 2.1**. <br />
+&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.2. Put this configuration ```{"auths":{"https://index.docker.io/v1/":{"auth":"here should be your encrypted username password from **step 1**"}}}``` in the file you created with the **step 2.1**. <br />
 > **_Note_**: interactive encoding the docker configuration from terminal will create a wrong encoded object as it will delete the quotes ```"``` from the configuration and after that will create wrong encoded object. That is why we need to put it(docker config) in a file and after that encode the file with the configuration in it. <br />
 
 &ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.3 Base64 encode the file. <br />
