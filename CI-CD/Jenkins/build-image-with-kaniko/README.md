@@ -5,12 +5,14 @@
 
 ## Steps
 1. Base64 Encode your docker username and password.
-> **_Example_**: echo -n username:password | base64 | tr -d "\n"
+> **_Example_**: echo -n username:password | base64 | tr -d "\n" <br />
 2. Base64 encode docker configuration with already **_encoded_** username password
-> **_Example_**: <p>{"auths":{"https://index.docker.io/v1/":{"auth":"here should be your encrypted username password from **step 1**"}}}</p>
-3. Put your encoded docker configuration from the **step 2** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file.
+2.1 Create a simple file. **_touch secret_**
+2.2 Put this configuration in that file {"auths":{"https://index.docker.io/v1/":{"auth":"here should be your encrypted username password from **step 1**"}}}
+> **_Note_**: interactive encoding the docker configuration from terminal will create a wrong encoded object as it will delete the quotes ```"``` from the configuration and after that will create wrong encoded object. That is why we need to put it(docker config) in a file and after that encode the file with the configuration in it.
+2.3 Base64 encode the file.
+> **_Example_**: base64 ./secret <br />
+3. Put your encoded docker configuration from the **step 2** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file. <br />
 4. Apply the **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file on your kubernetes cluster.
-> **_Example_**: kubectl create -f docker-config-secret.yaml
+> **_Example_**: kubectl create -f docker-config-secret.yaml <br />
 5. Modify the line 24th of **_[Jenkinsfil](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/Jenkinsfile)_**, replace the **repo/app** with your own.
-
-* After creating the pod in stage ```Get the go app and build``` it will get the git repo for our example Dockerfile & with internal ```Build a Go project``` stage will build the image of cloned repo Dockerfile & push it to our dockerhub.
