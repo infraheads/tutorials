@@ -49,7 +49,7 @@ echo -n username:password | base64
 
 ## Step 2.2. Copy and paste this configuration
 ```bash
-echo "{"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 1.1>"}}}" > secret
+echo "{"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 2.1>"}}}" > secret
 ```
 
 ## Step 2.3. Using secret content
@@ -57,7 +57,7 @@ Add the contents of the secret file in ***docker-config-secret.yaml*** file
 ```bash
 apiVersion: v1
 data:
-  config.json: {"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 1.1>"}}}
+  config.json: {"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 2.1>"}}}
 kind: Secret
 metadata:
   name: docker-config
