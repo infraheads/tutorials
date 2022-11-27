@@ -16,12 +16,13 @@ podTemplate(
 )
 {
   node (POD_LABEL) {
-    stage("Get the Terraform app and build") {
-      git url: "https://github.com/hashicorp/terraform.git", branch: "main"
+    stage("Get the Golang app and build") {
+      git url: "https://github.com/infraheads/tutorials.git", branch: "main"
         container("kaniko") {
-          stage("Build a Terraform project") {
+          stage("Build a Golang sample app") {
             sh '''
-              /kaniko/executor --context `pwd` --destination infraheads/terraform
+              cd Applications/sample-go-apps/
+              /kaniko/executor --context `pwd` --destination hakobmkoyan771/goapp
             '''
                 }
             }
