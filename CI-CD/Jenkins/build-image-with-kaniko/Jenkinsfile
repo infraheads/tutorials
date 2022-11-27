@@ -21,7 +21,7 @@ podTemplate(
         container("kaniko") {
           stage("Build a Terraform project") {
             sh '''
-              /kaniko/executor --context `pwd` --destination hakobmkoyan771/app
+              /kaniko/executor --context `pwd` --destination infraheads/terraform
             '''
                 }
             }
