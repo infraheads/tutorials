@@ -1,3 +1,4 @@
+
 # Build a docker image with Jenkins on Kubernetes.
 
 ## To build an image on Kubernetes there is a need
@@ -6,11 +7,11 @@
 
 # How to create encrypted secret on Kubernetes cluster for Jenkins pipeline.
 
-## Used tools
+## ***Used tools***
 - ***[age](https://github.com/FiloSottile/age)*** is a secure file encryption tool (can be used another encryption tool: AWS KMS, GCP KMS, Azure Key Vault and PGP).
 - ***[sops](https://github.com/mozilla/sops)*** is an editor of encrypted files.
 
-## Step 1. Install age and sops.
+## Step 1.1. Install age and sops.
 
 ### **. age**
 ```bash
@@ -32,21 +33,46 @@ sudo pip install --upgrade sops
 sops -v
 ```
 
-## Step 2. Create age key
+## Step 1.2. Create age key
 ```bash
 age-keygen > sops-key.txt
 chmod 600 sops-key.txt
 export SOPS_AGE_RECIPIENTS=<created public key>
 export SOPS_AGE_KEY_FILE=<key's current path>
 ```
-## Step 3. Encrypt the secret
+##
+## Step 2.1. Base64 Encode your docker username and password.
+Example: 
 ```bash
-sops --encrypt -i secret
+echo -n username:password | base64
+```
+
+## Step 2.2. Copy and paste this configuration
+```bash
+echo "{"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 1.1>"}}}" > secret
+```
+
+## Step 2.3. Using secret content
+Add the contents of the secret file in ***docker-config-secret.yaml*** file
+```bash
+apiVersion: v1
+data:
+  config.json: {"auths":{"https://index.docker.io/v1/":{"auth":"<here should be your encrypted username password from step 1.1>"}}}
+kind: Secret
+metadata:
+  name: docker-config
+type: Opaque
+```
+##
+
+## Step 3.1. Encrypt the secret
+```bash
+sops --encrypt -i docker-config-secret.yaml
 ```
 For encrypt one or more specific strings: 
-`sops --encrypt --encrypted-suffix 'auth' -i pod.yaml`
+`sops --encrypt --encrypted-suffix 'config.json' -i docker-config-secret.yaml`
 
-## Step 4. Decrypt the secret
+## Step 3.2. Decrypt the secret
 ```bash
-sops --decrypt -i secret
+sops --decrypt -i docker-config-secret.yaml
 ```
