@@ -1,6 +1,6 @@
 # Build a docker image with Jenkins on Kubernetes
 
-> To build an image on Kubernetes there is a need of **_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_** on kubernetes.
+> To build an image on Kubernetes there is a need of **_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_** on kubernetes. <br />
 > Terraform **_[Dockerfile](https://github.com/hashicorp/terraform/blob/main/Dockerfile)_**.
 
 ### Current steps are the preparation of docker configuration secret on Kubernetes cluster for Jenkins pipeline.
