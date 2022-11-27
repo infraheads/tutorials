@@ -1,25 +1,52 @@
-# Build a docker image with Jenkins on Kubernetes
+# Build a docker image with Jenkins on Kubernetes.
 
-> To build an image on Kubernetes there is a need of **_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_** on kubernetes. <br />
-> Terraform **_[Dockerfile](https://github.com/hashicorp/terraform/blob/main/Dockerfile)_**.
+## To build an image on Kubernetes there is a need
+- ***_[Kaniko](https://github.com/GoogleContainerTools/kaniko)_ on kubernetes***
+- ***Terraform [Dockerfile](https://github.com/hashicorp/terraform/blob/main/Dockerfile)***.
 
-### Current steps are the preparation of docker configuration secret on Kubernetes cluster for Jenkins pipeline.
+# How to create encrypted secret on Kubernetes cluster for Jenkins pipeline.
 
-## Steps
-1. Base64 Encode your docker username and password.
-> **_Example_**: echo -n username:password | base64
-2. Base64 encode docker configuration with already **_encoded_** username password <br />
-2.1 Create a simple file. 
-> **_Example_**: touch **secret**. <br />
+## Used tools
+- ***[age](https://github.com/FiloSottile/age)*** is a secure file encryption tool (can be used another encryption tool: AWS KMS, GCP KMS, Azure Key Vault and PGP).
+- ***[sops](https://github.com/mozilla/sops)*** is an editor of encrypted files.
 
-&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.2 Copy and paste this configuration `{"auths":{"https://index.docker.io/v1/":{"auth":"`**_`here should be your encrypted username password from step 1`_**`"}}}` in the file you created with the **step 2.1**. <br />
-> **_Note_**: interactive encoding the docker configuration from terminal will create a wrong encoded object as it will delete the quotes ```"``` from the configuration and after that will create wrong encoded object. That is why we need to put it(docker config) in a file and after that encode the file with the configuration in it. <br />
+## Step 1. Install age and sops.
 
-&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp;2.3 Base64 encode the file. <br />
-> **_Example_**: base64 **./secret** | tr -d "\n"
+### **. age**
+```bash
+AGE_VERSION=$(curl -s "https://api.github.com/repos/FiloSottile/age/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -Lo age.tar.gz "https://github.com/FiloSottile/age/releases/latest/download/age-v${AGE_VERSION}-linux-amd64.tar.gz"
+tar xf age.tar.gz
+sudo mv age/age /usr/local/bin
+sudo mv age/age-keygen /usr/local/bin
+rm -rf age.tar.gz
+rm -rf age
+age -version
+```
 
-3. Put your encoded docker configuration from the **step 2.3** in the 3rd line of **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file.
-4. Apply the **_[docker-config](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/docker-config-secret.yaml)_** secret file on your kubernetes cluster.
-> **_Example_**: kubectl create -f docker-config-secret.yaml
-5. Modify the line 24th of **_[Jenkinsfile](https://github.com/infraheads/tutorials/blob/main/CI-CD/Jenkins/build-image-with-kaniko/Jenkinsfile)_**, replace the **repo/app** with your own, **repo**=your dockerhub repository name, **app** the name of the image you want to create.
-6. Create a Jenkins Job and put the URL of your Jenkinsfile
+### . sops
+```bash
+sudo apt-get install gcc git libffi-dev libssl-dev libyaml-dev make openssl python-dev-is-python3
+sudo apt install python3-pip
+sudo pip install --upgrade sops
+sops -v
+```
+
+## Step 2. Create age key
+```bash
+age-keygen > sops-key.txt
+chmod 600 sops-key.txt
+export SOPS_AGE_RECIPIENTS=<created public key>
+export SOPS_AGE_KEY_FILE=<key's current path>
+```
+## Step 3. Encrypt the secret
+```bash
+sops --encrypt -i secret
+```
+For encrypt one or more specific strings: 
+`sops --encrypt --encrypted-suffix 'auth' -i pod.yaml`
+
+## Step 4. Decrypt the secret
+```bash
+sops --decrypt -i secret
+```
